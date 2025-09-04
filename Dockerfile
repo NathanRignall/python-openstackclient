@@ -18,6 +18,8 @@ FROM docker.io/opendevorg/python-builder:3.11-bookworm as builder
 COPY . /tmp/src
 RUN assemble
 
+RUN pip install --no-cache-dir --upgrade pip setuptools wheel
+
 RUN pip install git+https://github.com/openstack/python-heatclient.git@stable/2025.1
 
 FROM docker.io/opendevorg/python-base:3.11-bookworm
