@@ -18,6 +18,8 @@ FROM docker.io/opendevorg/python-builder:3.11-bookworm as builder
 COPY . /tmp/src
 RUN assemble
 
+RUN pip install git+https://github.com/openstack/python-heatclient.git@stable/2025.1
+
 FROM docker.io/opendevorg/python-base:3.11-bookworm
 
 COPY --from=builder /output/ /output
@@ -25,8 +27,5 @@ RUN /output/install-from-bindep
 
 # Trigger entrypoint loading to trigger stevedore entrypoint caching
 RUN openstack --help >/dev/null 2>&1
-
-# Install the heat client
-RUN pip install git+https://github.com/openstack/python-heatclient.git@stable/2025.1
 
 CMD ["/usr/local/bin/openstack"]
