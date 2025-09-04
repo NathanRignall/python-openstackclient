@@ -26,4 +26,7 @@ RUN /output/install-from-bindep
 # Trigger entrypoint loading to trigger stevedore entrypoint caching
 RUN openstack --help >/dev/null 2>&1
 
+# Install the heat client
+RUN pip install git+https://github.com/openstack/python-heatclient.git@stable/2025.1
+
 CMD ["/usr/local/bin/openstack"]
